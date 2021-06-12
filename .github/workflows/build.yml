@@ -16,7 +16,7 @@ jobs:
               docker build -t chaowenguo/azurefunc .
               docker login -u chaowenguo -p ${{secrets.DOCKER}}
               docker push chaowenguo/azurefunc
-              az login
+              az login --service-principal ${{secrets.AZURE}}
               az group create --name AzureFunctionsContainers-rg --location westeurope
               az storage account create --name storage --location westeurope --resource-group AzureFunctionsContainers-rg --sku Standard_LRS
               az functionapp plan create --resource-group AzureFunctionsContainers-rg --name myPremiumPlan --location westeurope --number-of-workers 1 --sku B1 --is-linux
