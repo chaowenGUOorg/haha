@@ -14,7 +14,7 @@ jobs:
               cd LocalFunctionsProject
               func new --name HttpExample --template "HTTP trigger"
               docker build -t chaowenguo/azurefunc .
-              docker login
+              docker login -u chaowenguo -p ${{secrets.DOCKER}}
               docker push chaowenguo/azurefunc
               az login
               az group create --name AzureFunctionsContainers-rg --location westeurope
