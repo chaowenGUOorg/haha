@@ -11,3 +11,13 @@ jobs:
               sudo apt update
               sudo apt install azure-functions-core-tools-3
               func init LocalFunctionsProject --worker-runtime node --language javascript --docker
+              cd LocalFunctionsProject
+              func new --name HttpExample --template "HTTP trigger"
+              docker build -t chaowenguo/azurefunc .
+              docker login
+              docker push chaowenguo/azurefunc
+              az login
+              az group create --name AzureFunctionsContainers-rg --location westeurope
+              az storage account create --name storage --location westeurope --resource-group AzureFunctionsContainers-rg --sku Standard_LRS
+              az functionapp plan create --resource-group AzureFunctionsContainers-rg --name myPremiumPlan --location westeurope --number-of-workers 1 --sku B1 --is-linux
+              az functionapp create --name func --storage-account storage --resource-group AzureFunctionsContainers-rg --plan myPremiumPlan --deployment-container-image-name chaowenguo/azurefunc
