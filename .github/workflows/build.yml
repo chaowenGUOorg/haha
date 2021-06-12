@@ -5,9 +5,4 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         - uses: actions/checkout@main
-        - uses: actions/setup-node@main
-          with:
-              node-version: 15.x
-        - env:
-              PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
-          run: node --version
+        - run: func init LocalFunctionsProject --worker-runtime node --language javascript --docker
